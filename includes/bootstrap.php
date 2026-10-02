@@ -148,7 +148,7 @@ function renderGlobalInterface(): void
     }
 
     $publicTools = $user === null ? '<div class="global-tools" aria-label="Display settings"><button id="languageToggle" class="tool-button language-toggle" type="button" aria-label="Switch language">العربية</button><button id="themeToggle" class="tool-button theme-toggle" type="button" aria-label="Toggle dark mode"><span aria-hidden="true">☾</span></button></div>' : '';
-    echo $sidebar . $utilityBar . $publicTools . '<script src="/lost-and-found/assets/js/app.js?v=20261002-6"></script>';
+    echo $sidebar . $utilityBar . $publicTools . '<script src="/lost-and-found/assets/js/app.js?v=20261002-7"></script>';
 }
 
 function requireLogin(): void

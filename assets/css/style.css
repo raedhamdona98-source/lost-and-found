@@ -368,6 +368,29 @@ html[dir="rtl"] .notification-badge { right:auto; left:-7px; }
 .button,.inline-actions button,.status-form button,.user-control-form button { display:inline-flex; align-items:center; justify-content:center; gap:8px; }
 .action-icon { width:18px; height:18px; display:inline-grid; place-items:center; flex:0 0 auto; }
 .action-icon svg { width:100%; height:100%; display:block; }
+
+/* In-site confirmation dialog */
+body.modal-open { overflow:hidden; }
+.site-modal { position:fixed; inset:0; z-index:3000; display:grid; place-items:center; padding:20px; visibility:hidden; opacity:0; transition:opacity .22s ease,visibility .22s ease; }
+.site-modal.is-open { visibility:visible; opacity:1; }
+.site-modal-backdrop { position:absolute; inset:0; background:rgba(5,20,30,.65); backdrop-filter:blur(7px); }
+.site-modal-card { position:relative; width:min(470px,100%); padding:32px; overflow:hidden; background:var(--white); border:1px solid var(--border); border-radius:24px; box-shadow:0 30px 90px rgba(0,0,0,.3); transform:translateY(18px) scale(.97); transition:transform .25s ease; }
+.site-modal.is-open .site-modal-card { transform:translateY(0) scale(1); }
+.site-modal-card::before { content:""; position:absolute; inset:0 0 auto; height:5px; background:linear-gradient(90deg,#c94242,#ee7777); }
+.site-modal-icon { width:54px; height:54px; display:grid; place-items:center; color:#c94242; background:#fde9e9; border-radius:16px; }
+.site-modal-icon svg { width:27px; height:27px; }
+.site-modal-card .eyebrow { margin:20px 0 6px; color:#c94242; }
+.site-modal-card h2 { margin:0 0 10px; color:var(--navy); font-size:28px; }
+.site-modal-message { margin:0; color:var(--muted); line-height:1.65; }
+.site-modal-actions { display:flex; justify-content:flex-end; gap:10px; margin-top:26px; }
+.site-modal-actions button { padding:11px 18px; border-radius:10px; font-weight:800; }
+.modal-cancel { color:var(--navy); background:var(--cream); border:1px solid var(--border); }
+.modal-confirm-delete { color:#fff; background:#c94242; }
+.modal-confirm-delete:hover { background:#a92f2f; }
+[data-theme="dark"] .site-modal-card { background:#152129; border-color:#344650; }
+[data-theme="dark"] .site-modal-card h2 { color:#edf5f8; }
+[data-theme="dark"] .modal-cancel { color:#edf5f8; background:#1c2c34; border-color:#3a4c56; }
+@media (max-width:520px) { .site-modal-card { padding:26px 20px; border-radius:19px; } .site-modal-actions { flex-direction:column-reverse; } .site-modal-actions button { width:100%; } }
 @media (max-width:850px) { .site-header{align-items:flex-start;flex-direction:column} nav{width:100%;gap:10px;overflow-x:auto;padding-bottom:4px} nav a,nav span{white-space:nowrap} .hero{grid-template-columns:1fr;padding-top:55px} .features{grid-template-columns:1fr} }
 @media (max-width:600px) { .form-grid,.dashboard-actions{grid-template-columns:1fr} .auth-card,.item-form-card{padding:28px 20px} }
 

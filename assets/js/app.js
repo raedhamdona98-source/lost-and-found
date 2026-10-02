@@ -13,8 +13,8 @@
 
     document.querySelectorAll('link[rel="stylesheet"][href*="assets/css/style.css"]').forEach(link => {
         const stylesheetUrl = new URL(link.href, window.location.origin);
-        if (stylesheetUrl.searchParams.get('v') !== '20261002-6') {
-            stylesheetUrl.searchParams.set('v', '20261002-6');
+        if (stylesheetUrl.searchParams.get('v') !== '20261002-7') {
+            stylesheetUrl.searchParams.set('v', '20261002-7');
             link.href = stylesheetUrl.toString();
         }
     });
@@ -367,13 +367,59 @@
         translateText(root.lang === 'ar' ? 'en' : 'ar');
     });
 
-    document.querySelectorAll('[data-confirm-delete]').forEach(button => {
-        button.addEventListener('click', event => {
+    const deleteButtons = document.querySelectorAll('[data-confirm-delete]');
+    if (deleteButtons.length) {
+        const modal = document.createElement('div');
+        modal.className = 'site-modal';
+        modal.setAttribute('aria-hidden', 'true');
+        modal.innerHTML = `
+            <div class="site-modal-backdrop" data-modal-close></div>
+            <section class="site-modal-card" role="dialog" aria-modal="true" aria-labelledby="deleteModalTitle">
+                <span class="site-modal-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M9 7V4h6v3M7 7l1 14h8l1-14M10 11v6M14 11v6"/></svg></span>
+                <p class="eyebrow">Confirm action</p>
+                <h2 id="deleteModalTitle">Delete user?</h2>
+                <p class="site-modal-message"></p>
+                <div class="site-modal-actions"><button class="modal-cancel" type="button" data-modal-close>Cancel</button><button class="modal-confirm-delete" type="button">Delete permanently</button></div>
+            </section>`;
+        document.body.appendChild(modal);
+
+        let pendingDeleteButton = null;
+        const closeModal = () => {
+            modal.classList.remove('is-open');
+            modal.setAttribute('aria-hidden', 'true');
+            document.body.classList.remove('modal-open');
+            pendingDeleteButton = null;
+        };
+        const openModal = button => {
+            pendingDeleteButton = button;
             const message = button.getAttribute('data-confirm-delete');
-            const translatedMessage = root.lang === 'ar' ? (translations[message] || message) : message;
-            if (!window.confirm(translatedMessage)) event.preventDefault();
+            modal.querySelector('.site-modal-message').textContent = root.lang === 'ar' ? (translations[message] || message) : message;
+            modal.querySelector('.site-modal-card .eyebrow').textContent = root.lang === 'ar' ? 'تأكيد الإجراء' : 'Confirm action';
+            modal.querySelector('#deleteModalTitle').textContent = root.lang === 'ar' ? 'حذف المستخدم؟' : 'Delete user?';
+            modal.querySelector('.modal-cancel').textContent = root.lang === 'ar' ? 'إلغاء' : 'Cancel';
+            modal.querySelector('.modal-confirm-delete').textContent = root.lang === 'ar' ? 'حذف نهائي' : 'Delete permanently';
+            modal.classList.add('is-open');
+            modal.setAttribute('aria-hidden', 'false');
+            document.body.classList.add('modal-open');
+            modal.querySelector('.modal-cancel').focus();
+        };
+
+        deleteButtons.forEach(button => button.addEventListener('click', event => {
+            event.preventDefault();
+            openModal(button);
+        }));
+        modal.querySelectorAll('[data-modal-close]').forEach(element => element.addEventListener('click', closeModal));
+        modal.querySelector('.modal-confirm-delete').addEventListener('click', () => {
+            if (!pendingDeleteButton) return;
+            const button = pendingDeleteButton;
+            modal.classList.remove('is-open');
+            document.body.classList.remove('modal-open');
+            button.form.requestSubmit(button);
         });
-    });
+        window.addEventListener('keydown', event => {
+            if (event.key === 'Escape' && modal.classList.contains('is-open')) closeModal();
+        });
+    }
 
     document.querySelectorAll('.button, button').forEach(button => {
         button.addEventListener('pointerdown', event => {
