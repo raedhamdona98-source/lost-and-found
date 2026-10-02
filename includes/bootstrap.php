@@ -7,6 +7,19 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
 
 require_once __DIR__ . '/../config/database.php';
 
+if (PHP_SAPI !== 'cli') {
+    register_shutdown_function(function (): void {
+        $status = http_response_code();
+        if ($status >= 300 && $status < 400) {
+            return;
+        }
+        echo '<div class="global-tools" aria-label="Display settings">'
+            . '<button id="languageToggle" class="tool-button language-toggle" type="button" aria-label="Switch language">العربية</button>'
+            . '<button id="themeToggle" class="tool-button theme-toggle" type="button" aria-label="Toggle dark mode"><span aria-hidden="true">☾</span></button>'
+            . '</div><script src="/lost-and-found/assets/js/app.js"></script>';
+    });
+}
+
 set_exception_handler(function (Throwable $exception): void {
     error_log($exception->__toString());
     http_response_code(500);

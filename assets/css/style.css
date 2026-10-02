@@ -197,5 +197,92 @@ footer img { width:190px; padding:8px; background:#fff; border-radius:8px; }
 footer { display:flex; align-items:center; justify-content:center; gap:22px; flex-wrap:wrap; }
 @media (max-width:850px) { .university-brand img{width:185px} .university-brand span{font-size:15px} .campus-image{min-height:300px} }
 @media (max-width:520px) { .university-brand{align-items:flex-start;flex-direction:column;gap:7px} .university-brand span{padding:0;border:0} .hero-visual .status-card{right:10px;left:10px} }
+
+/* Global experience: themes, motion, language controls */
+html { scroll-behavior:smooth; }
+body, .site-header, .dashboard, .admin-page, .reports-page, .form-page, .auth-page,
+.features, .report-card, .dashboard-card, .analytics-card, .management-card,
+.auth-card, .item-form-card, .detail-card, .table-wrap, input, select, textarea {
+    transition:background-color .3s ease,color .3s ease,border-color .3s ease,box-shadow .3s ease;
+}
+body { opacity:0; }
+body.page-ready { opacity:1; transition:opacity .35s ease; }
+a, button, .dashboard-card, .report-card, .match-card { transition:transform .2s ease,box-shadow .25s ease,color .2s ease,background-color .25s ease,border-color .25s ease; }
+a:hover { color:var(--teal); }
+.button:hover, button:hover { transform:translateY(-2px); box-shadow:0 9px 22px rgba(18,48,74,.16); }
+.button:active, button:active { transform:translateY(0) scale(.98); }
+.button, button { position:relative; overflow:hidden; }
+.button-ripple { position:absolute; width:12px; height:12px; pointer-events:none; background:rgba(255,255,255,.42); border-radius:50%; transform:translate(-50%,-50%) scale(0); animation:ripple-effect .65s ease-out; }
+@keyframes ripple-effect { to { opacity:0; transform:translate(-50%,-50%) scale(18); } }
+.report-card:hover, .match-card:hover, .analytics-card:hover, .management-card:hover { transform:translateY(-5px); box-shadow:0 17px 38px rgba(18,48,74,.12); }
+.campus-image { animation:campus-float 7s ease-in-out infinite alternate; }
+@keyframes campus-float { from { object-position:48% center; } to { object-position:54% center; } }
+.reveal-item { opacity:0; transform:translateY(24px); }
+.reveal-item.reveal-visible { opacity:1; transform:translateY(0); transition:opacity .6s ease var(--reveal-delay),transform .6s cubic-bezier(.2,.7,.2,1) var(--reveal-delay); }
+.global-tools { position:fixed; right:22px; bottom:22px; z-index:1000; display:flex; align-items:center; gap:9px; padding:8px; background:rgba(255,255,255,.86); border:1px solid var(--border); border-radius:16px; box-shadow:0 13px 35px rgba(18,48,74,.2); backdrop-filter:blur(14px); }
+.tool-button { min-width:45px; height:43px; padding:0 13px; display:grid; place-items:center; color:var(--navy); background:transparent; border:0; border-radius:10px; font-weight:800; }
+.tool-button:hover { color:#fff; background:var(--navy); }
+.theme-toggle { font-size:22px; }
+.language-toggle { font-family:Arial,'Tahoma',sans-serif; }
+
+[data-theme="dark"] {
+    --navy:#dceaf3; --blue:#58b8d7; --teal:#4fd1c5; --cream:#0d151b;
+    --white:#152129; --text:#e7eef2; --muted:#a9bac4; --border:#30424d;
+    color-scheme:dark;
+}
+[data-theme="dark"] body,
+[data-theme="dark"] .dashboard,
+[data-theme="dark"] .admin-page,
+[data-theme="dark"] .reports-page,
+[data-theme="dark"] .form-page,
+[data-theme="dark"] .auth-page,
+[data-theme="dark"] .detail-page { background:#0d151b; }
+[data-theme="dark"] .hero { background:linear-gradient(135deg,#101c23 0%,#0d151b 58%,#172830 100%); }
+[data-theme="dark"] .site-header,
+[data-theme="dark"] .features,
+[data-theme="dark"] .report-card,
+[data-theme="dark"] .dashboard-card,
+[data-theme="dark"] .status-card,
+[data-theme="dark"] .analytics-card,
+[data-theme="dark"] .management-card,
+[data-theme="dark"] .auth-card,
+[data-theme="dark"] .item-form-card,
+[data-theme="dark"] .detail-card,
+[data-theme="dark"] .match-section,
+[data-theme="dark"] .match-card,
+[data-theme="dark"] .claim-review-card,
+[data-theme="dark"] .notification-item,
+[data-theme="dark"] .table-wrap,
+[data-theme="dark"] .empty-state,
+[data-theme="dark"] .search-panel { background:#152129; }
+[data-theme="dark"] input,
+[data-theme="dark"] select,
+[data-theme="dark"] textarea { color:#e7eef2; background:#0f1a20; border-color:#3a4c56; }
+[data-theme="dark"] th { color:#dceaf3; background:#1d2c34; }
+[data-theme="dark"] .image-placeholder,
+[data-theme="dark"] .ownership-box { background:#1c2c34; }
+[data-theme="dark"] .button-secondary,
+[data-theme="dark"] .report-tabs a,
+[data-theme="dark"] .filter-links a,
+[data-theme="dark"] .pagination a { color:#dceaf3; background:#1a2931; }
+[data-theme="dark"] .global-tools { background:rgba(21,33,41,.9); box-shadow:0 13px 35px rgba(0,0,0,.4); }
+[data-theme="dark"] .tool-button { color:#e7eef2; }
+[data-theme="dark"] footer { background:#081015; }
+[data-theme="dark"] .university-brand img,
+[data-theme="dark"] footer img { background:#fff; border-radius:8px; }
+
+html[dir="rtl"] body { font-family:'Tahoma',Arial,sans-serif; }
+html[dir="rtl"] .site-header, html[dir="rtl"] .section-heading, html[dir="rtl"] .report-meta { direction:rtl; }
+html[dir="rtl"] th, html[dir="rtl"] td { text-align:right; }
+html[dir="rtl"] .ownership-box { border-right:4px solid var(--teal); border-left:0; }
+html[dir="rtl"] .notification-item.unread { border-right:5px solid var(--teal); border-left:1px solid var(--border); }
+html[dir="rtl"] .global-tools { right:auto; left:22px; }
+html[dir="rtl"] .alert ul { padding-right:20px; padding-left:0; }
+
+@media (prefers-reduced-motion:reduce) {
+    *,*::before,*::after { scroll-behavior:auto!important; animation-duration:.01ms!important; animation-iteration-count:1!important; transition-duration:.01ms!important; }
+    .reveal-item { opacity:1; transform:none; }
+}
+@media (max-width:600px) { .global-tools{right:12px;bottom:12px} html[dir="rtl"] .global-tools{right:auto;left:12px} }
 @media (max-width:850px) { .site-header{align-items:flex-start;flex-direction:column} nav{width:100%;gap:10px;overflow-x:auto;padding-bottom:4px} nav a,nav span{white-space:nowrap} .hero{grid-template-columns:1fr;padding-top:55px} .features{grid-template-columns:1fr} }
 @media (max-width:600px) { .form-grid,.dashboard-actions{grid-template-columns:1fr} .auth-card,.item-form-card{padding:28px 20px} }
