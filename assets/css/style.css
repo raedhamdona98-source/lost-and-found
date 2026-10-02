@@ -379,6 +379,7 @@ html[dir="rtl"] .notification-badge { right:auto; left:-7px; }
 .overview-card { display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:1rem; padding:1.25rem; border:1px solid var(--border); border-radius:20px; background:var(--white); color:var(--text); box-shadow:0 12px 32px rgba(11,44,66,.06); text-decoration:none; transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease; }
 .overview-card:hover { transform:translateY(-4px); border-color:var(--accent); box-shadow:0 18px 40px rgba(11,44,66,.12); }
 .overview-icon { display:grid; place-items:center; width:46px; height:46px; border-radius:14px; color:#fff; background:linear-gradient(135deg,var(--blue),var(--teal)); font-weight:800; }
+.overview-icon svg { width:23px; height:23px; display:block; }
 .overview-value { display:block; font-size:1.8rem; line-height:1; }
 .overview-label { display:block; margin-top:.35rem; color:var(--muted); font-size:.87rem; }
 .overview-arrow { color:var(--teal); font-size:1.25rem; }
