@@ -7,6 +7,25 @@
     const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     const storedTheme = localStorage.getItem('lf-theme');
     const storedLanguage = localStorage.getItem('lf-language') || 'en';
+    const sidebar = document.getElementById('appSidebar');
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const sidebarBackdrop = document.getElementById('sidebarBackdrop');
+
+    if (sidebar) {
+        document.body.classList.add('has-sidebar');
+        const currentPath = window.location.pathname.replace(/\/$/, '');
+        document.querySelectorAll('.sidebar-link').forEach(link => {
+            const linkPath = new URL(link.href, window.location.origin).pathname.replace(/\/$/, '');
+            if (linkPath === currentPath) link.classList.add('active');
+        });
+        const closeSidebar = () => document.body.classList.remove('sidebar-open');
+        sidebarToggle?.addEventListener('click', () => document.body.classList.toggle('sidebar-open'));
+        sidebarBackdrop?.addEventListener('click', closeSidebar);
+        sidebar.querySelectorAll('a').forEach(link => link.addEventListener('click', closeSidebar));
+        window.addEventListener('keydown', event => {
+            if (event.key === 'Escape') closeSidebar();
+        });
+    }
 
     const translations = {
         'Liwa University Lost & Found': 'جامعة ليوا للمفقودات والموجودات',

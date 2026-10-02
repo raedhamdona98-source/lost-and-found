@@ -13,10 +13,7 @@ if (PHP_SAPI !== 'cli') {
         if ($status >= 300 && $status < 400) {
             return;
         }
-        echo '<div class="global-tools" aria-label="Display settings">'
-            . '<button id="languageToggle" class="tool-button language-toggle" type="button" aria-label="Switch language">العربية</button>'
-            . '<button id="themeToggle" class="tool-button theme-toggle" type="button" aria-label="Toggle dark mode"><span aria-hidden="true">☾</span></button>'
-            . '</div><script src="/lost-and-found/assets/js/app.js"></script>';
+        renderGlobalInterface();
     });
 }
 
@@ -54,6 +51,68 @@ function validCsrfToken(?string $token): bool
 function currentUser(): ?array
 {
     return $_SESSION['user'] ?? null;
+}
+
+function renderGlobalInterface(): void
+{
+    $user = currentUser();
+    $sidebar = '';
+
+    if ($user !== null) {
+        $role = $user['role'];
+        $links = [
+            ['Dashboard', '/lost-and-found/dashboard.php', '⌂'],
+        ];
+        if ($role === 'student') {
+            $links = array_merge($links, [
+                ['Report Lost Item', '/lost-and-found/report_lost.php', '−'],
+                ['Report Found Item', '/lost-and-found/report_found.php', '+'],
+                ['Search Items', '/lost-and-found/search.php', '⌕'],
+                ['Possible Matches', '/lost-and-found/matches.php', '◇'],
+                ['My Reports', '/lost-and-found/my_reports.php', '▤'],
+            ]);
+        } elseif ($role === 'staff') {
+            $links = array_merge($links, [
+                ['Reports', '/lost-and-found/staff/reports.php', '▤'],
+                ['Inventory', '/lost-and-found/staff/inventory.php', '▣'],
+                ['Claims', '/lost-and-found/staff/claims.php', '✓'],
+                ['Returns', '/lost-and-found/staff/returns.php', '↩'],
+            ]);
+        } else {
+            $links = array_merge($links, [
+                ['Analytics', '/lost-and-found/admin/analytics.php', '▥'],
+                ['Users', '/lost-and-found/admin/manage_users.php', '♙'],
+                ['Registration Requests', '/lost-and-found/admin/users.php', '◷'],
+                ['Create Staff', '/lost-and-found/admin/create_staff.php', '+'],
+                ['System Data', '/lost-and-found/admin/catalog.php', '⚙'],
+                ['Departments', '/lost-and-found/admin/departments.php', '▦'],
+                ['Reports', '/lost-and-found/staff/reports.php', '▤'],
+                ['Claims', '/lost-and-found/staff/claims.php', '✓'],
+                ['Returns', '/lost-and-found/staff/returns.php', '↩'],
+            ]);
+        }
+        $links[] = ['Notifications', '/lost-and-found/notifications.php', '◉'];
+        $links[] = ['My Profile', '/lost-and-found/profile.php', '○'];
+
+        $nav = '';
+        foreach ($links as [$label, $href, $icon]) {
+            $nav .= '<a class="sidebar-link" href="' . e($href) . '"><span aria-hidden="true">' . e($icon) . '</span><b>' . e($label) . '</b></a>';
+        }
+        $initial = strtoupper(substr((string) $user['name'], 0, 1));
+        $sidebar = '<button id="sidebarToggle" class="sidebar-toggle" type="button" aria-label="Open navigation">☰</button>'
+            . '<div id="sidebarBackdrop" class="sidebar-backdrop"></div>'
+            . '<aside id="appSidebar" class="app-sidebar">'
+            . '<a class="sidebar-brand" href="/lost-and-found/dashboard.php"><img src="/lost-and-found/assets/images/liwa-university-logo.png" alt="Liwa University"><span>Lost &amp; Found</span></a>'
+            . '<nav class="sidebar-nav">' . $nav . '</nav>'
+            . '<div class="sidebar-user"><span class="user-avatar">' . e($initial) . '</span><div><strong>' . e($user['name']) . '</strong><small>' . e(ucfirst($role)) . '</small></div><a href="/lost-and-found/logout.php" aria-label="Logout">↪</a></div>'
+            . '</aside>';
+    }
+
+    echo $sidebar
+        . '<div class="global-tools" aria-label="Display settings">'
+        . '<button id="languageToggle" class="tool-button language-toggle" type="button" aria-label="Switch language">العربية</button>'
+        . '<button id="themeToggle" class="tool-button theme-toggle" type="button" aria-label="Toggle dark mode"><span aria-hidden="true">☾</span></button>'
+        . '</div><script src="/lost-and-found/assets/js/app.js"></script>';
 }
 
 function requireLogin(): void
