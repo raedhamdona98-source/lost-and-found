@@ -22,7 +22,10 @@ try {
 </head>
 <body>
     <header class="site-header">
-        <a class="brand brand-with-mark" href="index.php"><span class="brand-mark">LU</span>Liwa University Lost & Found</a>
+        <a class="brand university-brand" href="index.php">
+            <img src="assets/images/liwa-university-logo.png" alt="Liwa University">
+            <span>Lost & Found</span>
+        </a>
         <nav>
             <a href="search.php">Search Items</a>
             <a href="report_lost.php">Report Lost Item</a>
@@ -43,13 +46,17 @@ try {
                 </div>
             </div>
 
-            <div class="status-card">
-                <div class="status-icon">✓</div>
-                <h2>System Setup Complete</h2>
-                <p>PHP application and database connection status:</p>
-                <span class="connection-status <?= $databaseConnected ? 'connected' : 'disconnected' ?>">
-                    <?= $databaseConnected ? 'Database connected' : 'Database connection failed' ?>
-                </span>
+            <div class="hero-visual">
+                <img class="campus-image" src="assets/images/liwa-university-campus.jpg" alt="Liwa University campus building">
+                <div class="status-card">
+                    <div class="status-icon">✓</div>
+                    <div>
+                        <h2>System Ready</h2>
+                        <span class="connection-status <?= $databaseConnected ? 'connected' : 'disconnected' ?>">
+                            <?= $databaseConnected ? 'Database connected' : 'Database connection failed' ?>
+                        </span>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -60,6 +67,6 @@ try {
         </section>
     </main>
 
-    <footer><p>&copy; <?= date('Y') ?> Liwa University — Graduation Project</p></footer>
+    <footer><img src="assets/images/liwa-university-logo.png" alt="Liwa University"><p>&copy; <?= date('Y') ?> Liwa University — Graduation Project</p></footer>
 </body>
 </html>
