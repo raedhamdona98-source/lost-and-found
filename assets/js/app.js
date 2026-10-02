@@ -11,6 +11,14 @@
     const sidebarToggle = document.getElementById('sidebarToggle');
     const sidebarBackdrop = document.getElementById('sidebarBackdrop');
 
+    document.querySelectorAll('link[rel="stylesheet"][href*="assets/css/style.css"]').forEach(link => {
+        const stylesheetUrl = new URL(link.href, window.location.origin);
+        if (stylesheetUrl.searchParams.get('v') !== '20261002-2') {
+            stylesheetUrl.searchParams.set('v', '20261002-2');
+            link.href = stylesheetUrl.toString();
+        }
+    });
+
     if (sidebar) {
         document.body.classList.add('has-sidebar');
         const currentPath = window.location.pathname.replace(/\/$/, '');
