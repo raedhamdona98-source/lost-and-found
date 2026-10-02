@@ -13,8 +13,8 @@
 
     document.querySelectorAll('link[rel="stylesheet"][href*="assets/css/style.css"]').forEach(link => {
         const stylesheetUrl = new URL(link.href, window.location.origin);
-        if (stylesheetUrl.searchParams.get('v') !== '20261002-7') {
-            stylesheetUrl.searchParams.set('v', '20261002-7');
+        if (stylesheetUrl.searchParams.get('v') !== '20261002-8') {
+            stylesheetUrl.searchParams.set('v', '20261002-8');
             link.href = stylesheetUrl.toString();
         }
     });

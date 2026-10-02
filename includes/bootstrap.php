@@ -53,6 +53,29 @@ function currentUser(): ?array
     return $_SESSION['user'] ?? null;
 }
 
+function appBasePath(): string
+{
+    static $basePath = null;
+    if ($basePath !== null) {
+        return $basePath;
+    }
+
+    $documentRoot = realpath((string) ($_SERVER['DOCUMENT_ROOT'] ?? ''));
+    $projectRoot = realpath(__DIR__ . '/..');
+    if ($documentRoot && $projectRoot && str_starts_with(strtolower($projectRoot), strtolower($documentRoot))) {
+        $relativePath = str_replace('\\', '/', substr($projectRoot, strlen($documentRoot)));
+        return $basePath = '/' . trim($relativePath, '/');
+    }
+
+    return $basePath = '/lost-and-found';
+}
+
+function appUrl(string $path = ''): string
+{
+    $basePath = rtrim(appBasePath(), '/');
+    return $basePath . '/' . ltrim($path, '/');
+}
+
 function renderGlobalInterface(): void
 {
     $user = currentUser();
@@ -88,38 +111,38 @@ function renderGlobalInterface(): void
     if ($user !== null) {
         $role = $user['role'];
         $links = [
-            ['Dashboard', '/lost-and-found/dashboard.php', 'home'],
+            ['Dashboard', appUrl('dashboard.php'), 'home'],
         ];
         if ($role === 'student') {
             $links = array_merge($links, [
-                ['Report Lost Item', '/lost-and-found/report_lost.php', 'lost'],
-                ['Report Found Item', '/lost-and-found/report_found.php', 'found'],
-                ['Search Items', '/lost-and-found/search.php', 'search'],
-                ['Possible Matches', '/lost-and-found/matches.php', 'match'],
-                ['My Reports', '/lost-and-found/my_reports.php', 'reports'],
+                ['Report Lost Item', appUrl('report_lost.php'), 'lost'],
+                ['Report Found Item', appUrl('report_found.php'), 'found'],
+                ['Search Items', appUrl('search.php'), 'search'],
+                ['Possible Matches', appUrl('matches.php'), 'match'],
+                ['My Reports', appUrl('my_reports.php'), 'reports'],
             ]);
         } elseif ($role === 'staff') {
             $links = array_merge($links, [
-                ['Reports', '/lost-and-found/staff/reports.php', 'reports'],
-                ['Inventory', '/lost-and-found/staff/inventory.php', 'inventory'],
-                ['Claims', '/lost-and-found/staff/claims.php', 'claims'],
-                ['Returns', '/lost-and-found/staff/returns.php', 'returns'],
+                ['Reports', appUrl('staff/reports.php'), 'reports'],
+                ['Inventory', appUrl('staff/inventory.php'), 'inventory'],
+                ['Claims', appUrl('staff/claims.php'), 'claims'],
+                ['Returns', appUrl('staff/returns.php'), 'returns'],
             ]);
         } else {
             $links = array_merge($links, [
-                ['Analytics', '/lost-and-found/admin/analytics.php', 'analytics'],
-                ['Users', '/lost-and-found/admin/manage_users.php', 'users'],
-                ['Registration Requests', '/lost-and-found/admin/users.php', 'clock'],
-                ['Create Staff', '/lost-and-found/admin/create_staff.php', 'plus'],
-                ['System Data', '/lost-and-found/admin/catalog.php', 'settings'],
-                ['Departments', '/lost-and-found/admin/departments.php', 'departments'],
-                ['Reports', '/lost-and-found/staff/reports.php', 'reports'],
-                ['Claims', '/lost-and-found/staff/claims.php', 'claims'],
-                ['Returns', '/lost-and-found/staff/returns.php', 'returns'],
+                ['Analytics', appUrl('admin/analytics.php'), 'analytics'],
+                ['Users', appUrl('admin/manage_users.php'), 'users'],
+                ['Registration Requests', appUrl('admin/users.php'), 'clock'],
+                ['Create Staff', appUrl('admin/create_staff.php'), 'plus'],
+                ['System Data', appUrl('admin/catalog.php'), 'settings'],
+                ['Departments', appUrl('admin/departments.php'), 'departments'],
+                ['Reports', appUrl('staff/reports.php'), 'reports'],
+                ['Claims', appUrl('staff/claims.php'), 'claims'],
+                ['Returns', appUrl('staff/returns.php'), 'returns'],
             ]);
         }
-        $links[] = ['Notifications', '/lost-and-found/notifications.php', 'bell'];
-        $links[] = ['My Profile', '/lost-and-found/profile.php', 'profile'];
+        $links[] = ['Notifications', appUrl('notifications.php'), 'bell'];
+        $links[] = ['My Profile', appUrl('profile.php'), 'profile'];
 
         $nav = '';
         foreach ($links as [$label, $href, $iconName]) {
@@ -136,19 +159,19 @@ function renderGlobalInterface(): void
         $sidebar = '<button id="sidebarToggle" class="sidebar-toggle" type="button" aria-label="Open navigation">' . $renderIcon('menu') . '</button>'
             . '<div id="sidebarBackdrop" class="sidebar-backdrop"></div>'
             . '<aside id="appSidebar" class="app-sidebar">'
-            . '<a class="sidebar-brand" href="/lost-and-found/dashboard.php"><img src="/lost-and-found/assets/images/liwa-university-logo.png" alt="Liwa University"><span>Lost &amp; Found</span></a>'
+            . '<a class="sidebar-brand" href="' . e(appUrl('dashboard.php')) . '"><img src="' . e(appUrl('assets/images/liwa-university-logo.png')) . '" alt="Liwa University"><span>Lost &amp; Found</span></a>'
             . '<nav class="sidebar-nav">' . $nav . '</nav>'
-            . '<div class="sidebar-user"><span class="user-avatar">' . e($initial) . '</span><div><strong>' . e($user['name']) . '</strong><small>' . e(ucfirst($role)) . '</small></div><a href="/lost-and-found/logout.php" aria-label="Logout">' . $renderIcon('logout') . '</a></div>'
+            . '<div class="sidebar-user"><span class="user-avatar">' . e($initial) . '</span><div><strong>' . e($user['name']) . '</strong><small>' . e(ucfirst($role)) . '</small></div><a href="' . e(appUrl('logout.php')) . '" aria-label="Logout">' . $renderIcon('logout') . '</a></div>'
             . '</aside>';
         $utilityBar = '<header class="app-utility-bar"><div><span class="utility-kicker">Liwa University</span><strong>' . e($pageTitle) . '</strong></div><div class="utility-actions">'
-            . '<a class="notification-button' . ($unreadCount > 0 ? ' has-unread' : '') . '" href="/lost-and-found/notifications.php" aria-label="Notifications">' . $renderIcon('bell') . $badge . '</a>'
+            . '<a class="notification-button' . ($unreadCount > 0 ? ' has-unread' : '') . '" href="' . e(appUrl('notifications.php')) . '" aria-label="Notifications">' . $renderIcon('bell') . $badge . '</a>'
             . '<button id="languageToggle" class="utility-button language-toggle" type="button" aria-label="Switch language">العربية</button>'
             . '<button id="themeToggle" class="utility-button theme-toggle" type="button" aria-label="Toggle dark mode"><span>' . $renderIcon('moon') . '</span></button>'
             . '</div></header>';
     }
 
     $publicTools = $user === null ? '<div class="global-tools" aria-label="Display settings"><button id="languageToggle" class="tool-button language-toggle" type="button" aria-label="Switch language">العربية</button><button id="themeToggle" class="tool-button theme-toggle" type="button" aria-label="Toggle dark mode"><span aria-hidden="true">☾</span></button></div>' : '';
-    echo $sidebar . $utilityBar . $publicTools . '<script src="/lost-and-found/assets/js/app.js?v=20261002-7"></script>';
+    echo $sidebar . $utilityBar . $publicTools . '<script src="' . e(appUrl('assets/js/app.js?v=20261002-8')) . '"></script>';
 }
 
 function requireLogin(): void
