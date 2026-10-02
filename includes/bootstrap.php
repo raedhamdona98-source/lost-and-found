@@ -7,6 +7,16 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
 
 require_once __DIR__ . '/../config/database.php';
 
+set_exception_handler(function (Throwable $exception): void {
+    error_log($exception->__toString());
+    http_response_code(500);
+    if (PHP_SAPI === 'cli') {
+        fwrite(STDERR, "Application error: {$exception->getMessage()}\n");
+        return;
+    }
+    require __DIR__ . '/../errors/500.php';
+});
+
 function e(string $value): string
 {
     return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
@@ -98,4 +108,25 @@ function createNotification(int $userId, string $title, string $message): void
         'INSERT INTO notifications (user_id, title, message) VALUES (:user_id, :title, :message)'
     );
     $statement->execute(['user_id' => $userId, 'title' => $title, 'message' => $message]);
+}
+
+function redirectWithFlash(string $location, string $type, string $message): never
+{
+    $_SESSION['flash'] = ['type' => $type, 'message' => $message];
+    header('Location: ' . $location);
+    exit;
+}
+
+function pullFlash(): ?array
+{
+    $flash = $_SESSION['flash'] ?? null;
+    unset($_SESSION['flash']);
+    return is_array($flash) ? $flash : null;
+}
+
+function pagination(int $total, int $page, int $perPage = 10): array
+{
+    $pages = max(1, (int) ceil($total / $perPage));
+    $page = max(1, min($page, $pages));
+    return ['page' => $page, 'pages' => $pages, 'per_page' => $perPage, 'offset' => ($page - 1) * $perPage];
 }

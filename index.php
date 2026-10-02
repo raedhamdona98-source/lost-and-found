@@ -22,10 +22,11 @@ try {
 </head>
 <body>
     <header class="site-header">
-        <a class="brand" href="index.php">Liwa University Lost & Found</a>
+        <a class="brand brand-with-mark" href="index.php"><span class="brand-mark">LU</span>Liwa University Lost & Found</a>
         <nav>
             <a href="search.php">Search Items</a>
-            <a href="#report">Report an Item</a>
+            <a href="report_lost.php">Report Lost Item</a>
+            <a href="report_found.php">Report Found Item</a>
             <a class="button button-outline" href="login.php">Login</a>
         </nav>
     </header>

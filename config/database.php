@@ -9,9 +9,26 @@ function getDatabaseConnection(): PDO
         return $pdo;
     }
 
-    $dsn = 'mysql:host=127.0.0.1;dbname=lost_and_found;charset=utf8mb4';
+    $defaults = [
+        'host' => '127.0.0.1',
+        'database' => 'lost_and_found',
+        'username' => 'root',
+        'password' => '',
+        'charset' => 'utf8mb4',
+    ];
+    $localConfigFile = __DIR__ . '/config.local.php';
+    $config = file_exists($localConfigFile)
+        ? array_merge($defaults, require $localConfigFile)
+        : $defaults;
 
-    $pdo = new PDO($dsn, 'root', '', [
+    $dsn = sprintf(
+        'mysql:host=%s;dbname=%s;charset=%s',
+        $config['host'],
+        $config['database'],
+        $config['charset']
+    );
+
+    $pdo = new PDO($dsn, $config['username'], $config['password'], [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
         PDO::ATTR_EMULATE_PREPARES => false,

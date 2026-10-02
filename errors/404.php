@@ -1,0 +1,2 @@
+<?php http_response_code(404); ?>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Page Not Found</title><link rel="stylesheet" href="/lost-and-found/assets/css/style.css"></head><body class="error-page"><main><div class="brand-mark">LU</div><p class="eyebrow">Error 404</p><h1>Page not found</h1><p>The page you requested does not exist.</p><a class="button button-primary" href="/lost-and-found/">Return Home</a></main></body></html>

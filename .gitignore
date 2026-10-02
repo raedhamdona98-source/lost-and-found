@@ -1,4 +1,5 @@
 /uploads/*
 !/uploads/.gitkeep
 .env
+/config/config.local.php
 /vendor/

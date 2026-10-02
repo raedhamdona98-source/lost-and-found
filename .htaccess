@@ -1,0 +1,2 @@
+ErrorDocument 404 /lost-and-found/errors/404.php
+Options -Indexes

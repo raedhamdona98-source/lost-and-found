@@ -16,7 +16,8 @@ notifications, and administrative analytics.
 
 - Student: registers, reports lost/found items, searches, tracks reports, and submits claims.
 - Lost & Found Staff: reviews reports, verifies ownership, schedules collection, and confirms returns.
-- Administrator: approves registrations, creates staff accounts, monitors reports, and views analytics.
+- Administrator: approves registrations, manages users, departments, buildings,
+  and categories, creates staff accounts, monitors reports, and views analytics.
 
 ## Local installation
 
@@ -27,8 +28,17 @@ notifications, and administrative analytics.
 5. Open `http://localhost/lost-and-found/`.
 6. Visit `http://localhost/lost-and-found/setup_admin.php` once to create the first administrator.
 
-The default XAMPP database connection uses user `root` with an empty password.
-It can be changed in `config/database.php`.
+Copy `config/config.example.php` to `config/config.local.php` when installing on
+another computer, then enter the local database credentials. The local config
+file is excluded from Git.
+
+## Verification
+
+Run the automated smoke test with:
+
+```text
+C:\xampp\php\php.exe tests\smoke_test.php
+```
 
 ## Workflow
 

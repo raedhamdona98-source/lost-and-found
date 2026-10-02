@@ -5,15 +5,22 @@ requireStaff();
 $pdo=getDatabaseConnection(); $message=''; $error='';
 $lostStatuses=['submitted','under_review','matched','ready_for_collection','returned','closed','rejected'];
 $foundStatuses=['submitted','under_review','available','matched','ready_for_collection','returned','closed','rejected'];
+function allowedReportStatuses(string $type,string $current):array{
+    $maps=[
+        'lost'=>['submitted'=>['submitted','under_review','rejected'],'under_review'=>['under_review','matched','rejected'],'matched'=>['matched','ready_for_collection','rejected'],'ready_for_collection'=>['ready_for_collection','returned'],'returned'=>['returned','closed'],'closed'=>['closed'],'rejected'=>['rejected']],
+        'found'=>['submitted'=>['submitted','under_review','rejected'],'under_review'=>['under_review','available','matched','rejected'],'available'=>['available','matched','closed'],'matched'=>['matched','ready_for_collection','rejected'],'ready_for_collection'=>['ready_for_collection','returned'],'returned'=>['returned','closed'],'closed'=>['closed'],'rejected'=>['rejected']],
+    ];return $maps[$type][$current]??[$current];
+}
 if($_SERVER['REQUEST_METHOD']==='POST'){
     if(!validCsrfToken($_POST['csrf_token']??null)) $error='Your session expired.';
     else{
         $type=(string)($_POST['report_type']??''); $id=filter_input(INPUT_POST,'report_id',FILTER_VALIDATE_INT); $status=(string)($_POST['status']??'');
         $allowed=$type==='lost'?$lostStatuses:($type==='found'?$foundStatuses:[]);
-        if($id && in_array($status,$allowed,true)){
-            $table=$type==='lost'?'lost_items':'found_items'; $column=$type==='lost'?'lost_id':'found_id';
+        $table=$type==='lost'?'lost_items':'found_items'; $column=$type==='lost'?'lost_id':'found_id';
+        $currentStatement=$pdo->prepare("SELECT status FROM {$table} WHERE {$column}=:id");$currentStatement->execute(['id'=>$id]);$current=(string)$currentStatement->fetchColumn();
+        if($id && in_array($status,$allowed,true) && in_array($status,allowedReportStatuses($type,$current),true)){
             $statement=$pdo->prepare("UPDATE {$table} SET status=:status WHERE {$column}=:id"); $statement->execute(['status'=>$status,'id'=>$id]); $message='Report status updated successfully.';
-        }else $error='Invalid report update.';
+        }else $error='This status transition is not allowed.';
     }
 }
 $lost=$pdo->query("SELECT l.lost_id id,l.item_name,l.lost_date incident_date,l.status,u.name user_name,c.category_name,b.building_name FROM lost_items l JOIN users u ON u.user_id=l.user_id JOIN categories c ON c.category_id=l.category_id LEFT JOIN buildings b ON b.building_id=l.building_id ORDER BY l.created_at DESC")->fetchAll();

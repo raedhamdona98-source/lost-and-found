@@ -15,10 +15,13 @@ DROP TABLE IF EXISTS `buildings`;
 CREATE TABLE `buildings` (
   `building_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `building_name` varchar(100) NOT NULL,
+  `department_id` int(10) unsigned DEFAULT NULL,
   `description` varchar(255) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`building_id`),
-  UNIQUE KEY `building_name` (`building_name`)
+  UNIQUE KEY `building_name` (`building_name`),
+  KEY `idx_building_department` (`department_id`),
+  CONSTRAINT `fk_building_department` FOREIGN KEY (`department_id`) REFERENCES `departments` (`department_id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `categories`;
@@ -57,6 +60,18 @@ CREATE TABLE `claims` (
   CONSTRAINT `fk_claim_lost` FOREIGN KEY (`lost_id`) REFERENCES `lost_items` (`lost_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_claim_reviewer` FOREIGN KEY (`reviewed_by`) REFERENCES `users` (`user_id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `fk_claim_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `departments`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `departments` (
+  `department_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `department_name` varchar(120) NOT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`department_id`),
+  UNIQUE KEY `department_name` (`department_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `found_items`;
