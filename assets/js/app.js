@@ -13,8 +13,8 @@
 
     document.querySelectorAll('link[rel="stylesheet"][href*="assets/css/style.css"]').forEach(link => {
         const stylesheetUrl = new URL(link.href, window.location.origin);
-        if (stylesheetUrl.searchParams.get('v') !== '20261002-5') {
-            stylesheetUrl.searchParams.set('v', '20261002-5');
+        if (stylesheetUrl.searchParams.get('v') !== '20261002-6') {
+            stylesheetUrl.searchParams.set('v', '20261002-6');
             link.href = stylesheetUrl.toString();
         }
     });
@@ -149,6 +149,7 @@
         'Approve': 'قبول',
         'Reject': 'رفض',
         'Save': 'حفظ',
+        'Delete': 'حذف',
         'Update': 'تحديث',
         'Add Building': 'إضافة مبنى',
         'Add Category': 'إضافة تصنيف',
@@ -252,6 +253,7 @@
         'Toggle dark mode': 'تبديل الوضع الداكن',
         'Use light mode': 'استخدام الوضع الفاتح',
         'Use dark mode': 'استخدام الوضع الداكن',
+        'Delete this user permanently? Related reports, claims, and notifications may also be deleted.': 'هل تريد حذف هذا المستخدم نهائيًا؟ قد تُحذف أيضًا البلاغات والطلبات والإشعارات المرتبطة به.',
         'Return Home': 'العودة للرئيسية',
         'Return to Dashboard': 'العودة إلى لوحة التحكم'
     };
@@ -363,6 +365,14 @@
     });
     languageButton?.addEventListener('click', () => {
         translateText(root.lang === 'ar' ? 'en' : 'ar');
+    });
+
+    document.querySelectorAll('[data-confirm-delete]').forEach(button => {
+        button.addEventListener('click', event => {
+            const message = button.getAttribute('data-confirm-delete');
+            const translatedMessage = root.lang === 'ar' ? (translations[message] || message) : message;
+            if (!window.confirm(translatedMessage)) event.preventDefault();
+        });
     });
 
     document.querySelectorAll('.button, button').forEach(button => {

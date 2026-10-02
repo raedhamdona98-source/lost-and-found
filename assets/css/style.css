@@ -149,12 +149,14 @@ th { color:var(--navy); background:#eef4f6; font-size:13px; text-transform:upper
 .filter-links { display:flex; flex-wrap:wrap; gap:9px; margin:25px 0; }
 .filter-links a { padding:8px 13px; color:var(--blue); background:var(--white); border:1px solid var(--border); border-radius:20px; text-decoration:none; }
 .filter-links a.active { color:var(--white); background:var(--blue); border-color:var(--blue); }
-.user-control-form { display:grid; grid-template-columns:minmax(105px,1fr) minmax(125px,1fr) auto; align-items:center; gap:7px; width:100%; min-width:285px; }
+.user-control-form { display:grid; grid-template-columns:minmax(105px,1fr) minmax(125px,1fr) auto auto; align-items:center; gap:7px; width:100%; min-width:390px; }
 .user-control-form select { min-width:0; width:100%; margin:0; padding:8px 30px 8px 10px; }
 .user-control-form button,.editable-list button { min-width:64px; padding:9px 12px; color:var(--white); background:var(--blue); border-radius:6px; font-weight:700; white-space:nowrap; }
+.user-control-form .user-delete-button { color:#fff; background:#c94242; }
+.user-control-form .user-delete-button:hover { background:#a92f2f; }
 .admin-page td:last-child { min-width:310px; padding-right:18px; }
 .admin-page .table-wrap { max-width:100%; }
-@media (max-width:700px) { .user-control-form { grid-template-columns:1fr 1fr; } .user-control-form button { grid-column:1 / -1; width:100%; } }
+@media (max-width:700px) { .user-control-form { grid-template-columns:1fr 1fr; min-width:300px; } .user-control-form button { width:100%; } }
 .management-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:22px; }
 .management-card { padding:26px; background:var(--white); border:1px solid var(--border); border-radius:13px; }
 .management-card h2 { margin-top:0; color:var(--navy); }
