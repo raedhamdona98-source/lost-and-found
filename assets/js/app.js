@@ -13,8 +13,8 @@
 
     document.querySelectorAll('link[rel="stylesheet"][href*="assets/css/style.css"]').forEach(link => {
         const stylesheetUrl = new URL(link.href, window.location.origin);
-        if (stylesheetUrl.searchParams.get('v') !== '20261002-3') {
-            stylesheetUrl.searchParams.set('v', '20261002-3');
+        if (stylesheetUrl.searchParams.get('v') !== '20261002-4') {
+            stylesheetUrl.searchParams.set('v', '20261002-4');
             link.href = stylesheetUrl.toString();
         }
     });
@@ -162,6 +162,96 @@
         'No reports match your search.': 'لا توجد بلاغات مطابقة لبحثك.',
         'Page not found': 'الصفحة غير موجودة',
         'Something went wrong': 'حدث خطأ ما',
+        'Liwa University': 'جامعة ليوا',
+        'Administration': 'الإدارة',
+        'Administration dashboard': 'لوحة الإدارة',
+        'Configuration': 'الإعدادات',
+        'User management': 'إدارة المستخدمين',
+        'Ownership verification': 'التحقق من الملكية',
+        'Item retrieval': 'استلام الأغراض',
+        'Lost & Found staff': 'موظفو المفقودات والموجودات',
+        'Data matching': 'مطابقة البيانات',
+        'Found item report': 'بلاغ غرض موجود',
+        'Lost item report': 'بلاغ غرض مفقود',
+        'Manage Users': 'إدارة المستخدمين',
+        'Review account information, roles, and access status.': 'راجع معلومات الحسابات والصلاحيات وحالة الوصول.',
+        'All': 'الكل',
+        'Student': 'طالب',
+        'Staff': 'موظف',
+        'Admin': 'مسؤول',
+        'Active': 'نشط',
+        'Pending': 'قيد الانتظار',
+        'Suspended': 'موقوف',
+        'Name': 'الاسم',
+        'Email': 'البريد الإلكتروني',
+        'Phone': 'الهاتف',
+        'Joined': 'تاريخ الانضمام',
+        'Role & Status': 'الصلاحية والحالة',
+        'Role': 'الصلاحية',
+        'Status': 'الحالة',
+        'Action': 'الإجراء',
+        'Date': 'التاريخ',
+        'Item': 'الغرض',
+        'ID': 'الرقم',
+        'Claim': 'الطلب',
+        'Pickup': 'الاستلام',
+        'Return status': 'حالة التسليم',
+        'Registration submitted. Wait for administrator approval before logging in.': 'تم إرسال طلب التسجيل. انتظر موافقة المسؤول قبل تسجيل الدخول.',
+        'Review student details before activating an account.': 'راجع بيانات الطالب قبل تفعيل الحساب.',
+        'No pending registration requests.': 'لا توجد طلبات تسجيل معلقة.',
+        'No users match this filter.': 'لا يوجد مستخدمون مطابقون لهذا التصنيف.',
+        'No reports available.': 'لا توجد بلاغات متاحة.',
+        'No claim requests available.': 'لا توجد طلبات استلام متاحة.',
+        'No approved claims are ready for collection.': 'لا توجد طلبات مقبولة جاهزة للاستلام.',
+        'No possible matches found yet.': 'لم يتم العثور على تطابقات محتملة حتى الآن.',
+        'Location not specified': 'الموقع غير محدد',
+        'Select category': 'اختر التصنيف',
+        'Select building': 'اختر المبنى',
+        'Room, hall, or floor': 'الغرفة أو القاعة أو الطابق',
+        'Where is the item now?': 'أين يوجد الغرض الآن؟',
+        'Color, brand, distinguishing marks...': 'اللون والعلامة التجارية والعلامات المميزة...',
+        'Describe a detail only the owner would know...': 'اذكر تفصيلًا لا يعرفه إلا مالك الغرض...',
+        'Confirmation notes': 'ملاحظات التأكيد',
+        'Review notes': 'ملاحظات المراجعة',
+        'Pickup date and time': 'تاريخ ووقت الاستلام',
+        'Verify & Approve': 'تحقق واقبل',
+        'Confirm Return': 'تأكيد التسليم',
+        'Close Case': 'إغلاق الحالة',
+        'Awaiting collection': 'بانتظار الاستلام',
+        'Manage campus buildings and item categories used in reports.': 'إدارة مباني الجامعة وتصنيفات الأغراض المستخدمة في البلاغات.',
+        'Buildings': 'المباني',
+        'Item Categories': 'تصنيفات الأغراض',
+        'Review and update the status of all lost and found reports.': 'راجع وحدّث حالة جميع بلاغات المفقودات والموجودات.',
+        'Review the claimant\'s private ownership details before approving collection.': 'راجع تفاصيل إثبات الملكية الخاصة قبل الموافقة على الاستلام.',
+        'Confirm physical handover, then close the completed case.': 'أكد التسليم الفعلي ثم أغلق الحالة المكتملة.',
+        'Incident Hotspots': 'المواقع الأكثر تسجيلًا للحوادث',
+        'Item Categories': 'تصنيفات الأغراض',
+        'Monthly Activity': 'النشاط الشهري',
+        'Report Statuses': 'حالات البلاغات',
+        'Monitor implementation, report activity, case progress, and campus incident hotspots.': 'تابع أداء النظام ونشاط البلاغات وتقدم الحالات والمواقع الأكثر تسجيلًا.',
+        'Dashboard': 'لوحة التحكم',
+        'Quick access': 'وصول سريع',
+        'What would you like to do?': 'ماذا تريد أن تفعل؟',
+        'Latest updates': 'آخر التحديثات',
+        'Recent notifications': 'أحدث الإشعارات',
+        'View all': 'عرض الكل',
+        "You're all caught up": 'لا توجد تحديثات جديدة',
+        'New updates about your reports and claims will appear here.': 'ستظهر هنا التحديثات الجديدة حول بلاغاتك وطلباتك.',
+        'My reports': 'بلاغاتي',
+        'Under review': 'قيد المراجعة',
+        'My claims': 'طلباتي',
+        'Unread notifications': 'إشعارات غير مقروءة',
+        'Open reports': 'البلاغات المفتوحة',
+        'Pending claims': 'الطلبات المعلقة',
+        'Completed returns': 'عمليات التسليم المكتملة',
+        'Reports to review': 'بلاغات للمراجعة',
+        'Ready for collection': 'جاهز للاستلام',
+        'Items in inventory': 'أغراض في المخزون',
+        'Open navigation': 'فتح قائمة التنقل',
+        'Switch language': 'تغيير اللغة',
+        'Toggle dark mode': 'تبديل الوضع الداكن',
+        'Use light mode': 'استخدام الوضع الفاتح',
+        'Use dark mode': 'استخدام الوضع الداكن',
         'Return Home': 'العودة للرئيسية',
         'Return to Dashboard': 'العودة إلى لوحة التحكم'
     };
@@ -176,6 +266,33 @@
             themeButton.querySelector('span').textContent = theme === 'dark' ? '☀' : '☾';
             themeButton.setAttribute('aria-label', theme === 'dark' ? 'Use light mode' : 'Use dark mode');
         }
+    }
+
+    function addActionIcons() {
+        const iconPaths = {
+            search: '<circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/>',
+            save: '<path d="M5 3h12l2 2v16H5zM8 3v6h8V3M8 21v-7h8v7"/>',
+            login: '<path d="M10 4H4v16h6M14 8l4 4-4 4M8 12h10"/>',
+            add: '<circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/>',
+            check: '<path d="m5 12 4 4L19 6"/>',
+            close: '<path d="M6 6l12 12M18 6 6 18"/>',
+            back: '<path d="m15 18-6-6 6-6"/>',
+            report: '<path d="M5 3h14v18H5zM8 7h8M8 11h8M8 15h5"/>'
+        };
+        const rules = [
+            [/search|بحث/i, 'search'], [/save|update|حفظ|تحديث/i, 'save'], [/login|logout|دخول|خروج/i, 'login'],
+            [/create|add|new|إنشاء|إضافة|جديد/i, 'add'], [/approve|confirm|submit|verify|قبول|تأكيد|إرسال|تحقق/i, 'check'],
+            [/reject|cancel|delete|رفض|إلغاء|حذف/i, 'close'], [/back|return home|رجوع|عودة/i, 'back'], [/report|بلاغ/i, 'report']
+        ];
+        document.querySelectorAll('a.button, button:not(.utility-button):not(.sidebar-toggle):not(.tool-button)').forEach(element => {
+            if (element.querySelector('.action-icon')) return;
+            const rule = rules.find(([pattern]) => pattern.test(element.textContent.trim()));
+            if (!rule) return;
+            const span = document.createElement('span');
+            span.className = 'action-icon';
+            span.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${iconPaths[rule[1]]}</svg>`;
+            element.prepend(span);
+        });
     }
 
     function translateText(language) {
@@ -203,6 +320,10 @@
             const trimmed = original.trim();
             let translated = translations[trimmed];
             if (!translated && trimmed.startsWith('Welcome, ')) translated = `مرحبًا، ${trimmed.slice(9)}`;
+            if (!translated && trimmed.startsWith('Welcome back, ')) translated = `مرحبًا بعودتك، ${trimmed.slice(14)}`;
+            if (!translated && trimmed.startsWith('Claim #')) translated = trimmed.replace('Claim', 'طلب');
+            if (!translated && trimmed.startsWith('Your lost report #')) translated = trimmed.replace('Your lost report', 'بلاغك عن المفقود');
+            if (!translated && /^\d+% match$/.test(trimmed)) translated = trimmed.replace('match', 'تطابق');
             if (!translated && /^Notifications \(\d+\)$/.test(trimmed)) translated = `الإشعارات (${trimmed.match(/\d+/)[0]})`;
             if (!translated && /^\d+ results?$/.test(trimmed)) translated = trimmed.replace('result', 'نتيجة').replace('s', '');
             if (!translated && /^Lost #\d+$/.test(trimmed)) translated = trimmed.replace('Lost', 'مفقود');
@@ -233,6 +354,7 @@
         localStorage.setItem('lf-language', language);
     }
 
+    addActionIcons();
     updateTheme(storedTheme || (systemDark ? 'dark' : 'light'));
     translateText(storedLanguage);
 
